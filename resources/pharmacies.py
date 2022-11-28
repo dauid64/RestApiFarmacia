@@ -7,8 +7,8 @@ from resources.filters import normalize_path_params_pharmacy, consult_without_CI
 path_param = reqparse.RequestParser()
 path_param.add_argument('CITY', type=str)
 path_param.add_argument('NAME', type=str)
-path_param.add_argument('LIMIT', type=str)
-path_param.add_argument('OFFSET', type=str)
+path_param.add_argument('LIMIT', type=int)
+path_param.add_argument('OFFSET', type=int)
 
 class Pharmacies(Resource):
     @jwt_required()
@@ -49,7 +49,7 @@ class Pharmacies(Resource):
                 })
 
             return {'PHARMACIES': pharmacies}, 200   
-             
+
         return {'message': 'Not found'}, 400
 
 
