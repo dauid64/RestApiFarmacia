@@ -32,6 +32,11 @@ class PatientsModel(banco.Model):
             return patient
         return None
 
+    def update_patient(self, FIRST_NAME, LAST_NAME, DATE_OF_BIRTH):
+        self.FIRST_NAME = FIRST_NAME
+        self.LAST_NAME = LAST_NAME
+        self.DATE_OF_BIRTH = DATE_OF_BIRTH
+
     def json(self):
         return {
             'UUID': self.UUID,

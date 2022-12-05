@@ -33,3 +33,28 @@ class Patient(Resource):
             return {'message': 'An internal error ocurred trying to save patient'}, 500 # Internal Server Error
         
         return patient.json(), 200
+
+class ModifyPatient(Resource):
+    @jwt_required()
+    def put(self, UUID):
+        data = Patient.args.parse_args()
+
+        data['DATE_OF_BIRTH'] = datetime.strptime(data['DATE_OF_BIRTH'], '%Y-%m-%d').date() # repassando para data object
+
+        patient_find = PatientsModel.find_by_id(UUID)
+
+        if patient_find:
+            patient_find.update_patient(**data)
+            try:
+                patient_find.save_patient()
+            except:
+                return {'message': 'An internal error ocurred trying to save hotel.'}, 500 # Internal Server Error
+            return patient_find.json(), 200
+        
+        patient = PatientsModel(UUID, **data)
+
+        try:
+            patient.save_patient()
+        except:
+            return {'message': 'An internal error ocurred trying to save hotel.'}, 500 # Internal Server Error
+        return patient.json(), 201 # created criado

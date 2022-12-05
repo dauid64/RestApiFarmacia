@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-from resources.patients import Patients, Patient
+from resources.patients import Patients, Patient, ModifyPatient
 from resources.pharmacies import Pharmacies, Pharmacie
 from resources.transactions import Transactions, Transaction
 from resources.users import User, UserRegister, UserLogin, UserLogout
@@ -29,6 +29,7 @@ def token_acess_invalid(jwt_header, jwt_payload):
 
 api.add_resource(Patients, '/patients') 
 api.add_resource(Patient, '/patient')
+api.add_resource(ModifyPatient, '/patient/modify/<string:UUID>')
 api.add_resource(Pharmacies, '/pharmacies')
 api.add_resource(Pharmacie, '/pharmacie')
 api.add_resource(Transactions, '/transactions')

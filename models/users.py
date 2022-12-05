@@ -36,6 +36,9 @@ class UserModel(banco.Model):
         else:
             return "USER0000"
 
+    def delete_user(self):
+        banco.session.delete(self)
+        banco.session.commit()
     
     def save_user(self):
         banco.session.add(self)

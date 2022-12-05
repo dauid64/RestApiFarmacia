@@ -14,6 +14,19 @@ class User(Resource):
         if user:
             return user.json()
         return {'message': 'User not found'}, 404 # not found
+    
+    @jwt_required()
+    def delete(self, USERNAME):
+        user = UserModel.find_by_login(USERNAME)
+        if user:
+            try:
+                user.delete_user()
+            except:
+                return {'message': 'An internal error ocurred trying to delete user.'}, 500 # Internal Server Error
+                
+            return {'message': 'User Deleted.'}
+
+        return {'message': 'User not found.'}, 404
 
 class UserRegister(Resource):
     
