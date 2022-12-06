@@ -18,6 +18,8 @@ class User(Resource):
     @jwt_required()
     def delete(self, USERNAME):
         user = UserModel.find_by_login(USERNAME)
+        jwt_id = get_jwt()['jti'] #JWT Token identifier
+        BLACKLIST.add(jwt_id)
         if user:
             try:
                 user.delete_user()
